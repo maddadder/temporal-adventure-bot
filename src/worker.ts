@@ -1,14 +1,21 @@
-import { Worker } from "@temporalio/worker";
+import { Worker, NativeConnection } from '@temporalio/worker';
 
 import { createActivities } from "./activities";
 import { platformFactory } from "./platforms/factory";
 import { settings } from "./settings";
 
 async function run() {
+  console.log("platformFactory");
   const { createIntegration } = platformFactory();
+  console.log("createIntegration");
   const integration = await createIntegration();
-
+  console.log("Worker.create");
+  const connection = await NativeConnection.create({
+    address: 'temporaltest-frontend-headless', // defaults port to 7233 if not specified
+  });
   const worker = await Worker.create({
+    connection,
+    workflowsPath: require.resolve("./workflows"),
     activities: createActivities(integration),
     sinks: {
       logger: {
@@ -26,8 +33,8 @@ async function run() {
       },
     },
     taskQueue: settings.taskQueue,
-    workflowsPath: require.resolve("./workflows"),
   });
+  console.log("worker.run");
   await worker.run();
 }
 

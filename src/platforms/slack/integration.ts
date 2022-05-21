@@ -64,6 +64,8 @@ export class SlackIntegration implements Integration {
   }
 
   async pinMessage(messageId: MessageId) {
+    console.log('pinMessage to slack channel')
+    console.log(process.env.SLACK_CHANNEL)
     throwIfError(
       await this.#slack.client.pins.add({
         channel: process.env.SLACK_CHANNEL,
@@ -74,6 +76,8 @@ export class SlackIntegration implements Integration {
   }
 
   async postMessage({ notify, text }: PostMessageOptions) {
+    console.log('postMessage to slack channel')
+    console.log(process.env.SLACK_CHANNEL)
     const response = await this.#slack.client.chat.postMessage({
       channel: process.env.SLACK_CHANNEL,
       text: notify ? `<!here> ${text}` : text,

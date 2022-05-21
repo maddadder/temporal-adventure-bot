@@ -11,7 +11,7 @@ dotenv.config();
 
 export const platformFactory = () => {
   const platform = process.env.SOCIAL_PLATFORM;
-
+  console.log("in platformFactory")
   switch (platform) {
     case "discord":
       return {

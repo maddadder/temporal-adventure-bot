@@ -1,5 +1,4 @@
 import express from "express";
-import ngrok from "ngrok";
 
 import { settings } from "../../settings";
 import { HandleText } from "../types";
@@ -9,10 +8,7 @@ interface SlackMessageBody {
 }
 
 export const createSlackExpressServer = async (handleText: HandleText) => {
-  const url = await ngrok.connect(settings.port);
-
-  console.log("Receiving Slack events on:", url);
-
+  console.log("in createSlackExpressServer")
   const app = express().use(express.urlencoded({ extended: true }));
 
   app.get("/", (_, response) => {
@@ -28,7 +24,7 @@ export const createSlackExpressServer = async (handleText: HandleText) => {
 
     response.status(200).send(message).end();
   });
-
+  console.log("app.listen")
   const server = app.listen(settings.port);
 
   return () => {

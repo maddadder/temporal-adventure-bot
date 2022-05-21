@@ -126,3 +126,19 @@ For example, the Slack integration uses the [Slack Bolt SDK](https://slack.dev/b
 
 `createServer` creates the (generally Express) server that runs locally and receives webhook events from the social platform.
 Both the Discord and Slack servers use Ngrok to expose a local port on the public web, so that a `/force` command configured on the platform sends a message, it can signal to the workflow.
+
+### Also
+```
+1. You have to invite the bot into the channel
+2. The SLACK_CHANNEL is the channel id in the .env file, not the channel name. You can get the channel id via:
+   a. right click on channel in slack
+   b. open channel details
+   c. Look for the channel id on this screen
+3. The channel name/id is the the same as the workspace name. You need to create a channel in your workspace and invite the bot into your channel 
+```
+### Deploy
+```
+docker-compose build
+docker push 192.168.1.151:32000/temporal-adventure-bot:1.22.74
+helm upgrade temporal-adventure-bot ./temporal-adventure-bot
+```

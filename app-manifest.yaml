@@ -1,0 +1,25 @@
+display_information:
+  name: choose your own adventure
+features:
+  bot_user:
+    display_name: choose your own adventure
+    always_online: false
+  slash_commands:
+    - command: /force
+      description: "Force an adventure choice: 'random' or a number for an option."
+      usage_hint: "1"
+      url: https://chatbot.leenet.link
+oauth_config:
+  scopes:
+    bot:
+      - channels:read
+      - chat:write.public
+      - chat:write
+      - commands
+      - pins:write
+      - reactions:read
+      - reactions:write
+settings:
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

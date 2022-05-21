@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "temporal-adventure-bot.fullname" . }}
+  labels:
+    {{- include "temporal-adventure-bot.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "temporal-adventure-bot.selectorLabels" . | nindent 4 }}

@@ -7,7 +7,7 @@ export const settings = {
   /**
    * Ngrok server port to listen for server messages on.
    */
-  port: 1234,
+  port: 3001,
 
   /**
    * Temporal task queue to run execution in.

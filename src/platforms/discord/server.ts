@@ -1,14 +1,10 @@
 import express from "express";
-import ngrok from "ngrok";
 
 import { settings } from "../../settings";
 import { HandleText } from "../types";
 import { getDiscordClient } from "./client";
 
 export const createDiscordExpressServer = async (handleText: HandleText) => {
-  const url = await ngrok.connect(settings.port);
-
-  console.log("Receiving Discord events on:", url);
 
   const client = await getDiscordClient();
 
