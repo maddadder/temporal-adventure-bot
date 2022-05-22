@@ -3,12 +3,12 @@ version: '2'
 services:
 
   temporal-adventure-bot:
-    image: 192.168.1.151:32000/temporal-adventure-bot:1.22.77
+    image: 192.168.1.151:32000/temporal-adventure-bot:1.22.79
     build:
       context: ./
       dockerfile: ./Dockerfile
     restart: unless-stopped
-    ports:
-      - "3001:3001"
+    #ports:
+    #  - "3001:3001"
     environment:
       TEMPORAL_CLI_ADDRESS: temporaltest-frontend-headless:7233

@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 3001
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -49,14 +49,14 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: "SOCIAL_PLATFORM"
-              value: "slack"
+              value: {{ .Values.socialPlatform }}
             - name: "SLACK_BOT_TOKEN"
               valueFrom:
                 secretKeyRef:
                   key: slackBotToken
                   name: {{ .Release.Name }}-auth
             - name: "SLACK_CHANNEL"
-              value: "C03GF9VQP34"
+              value: {{ .Values.slackChannel }}
             - name: "SLACK_SIGNING_SECRET"
               valueFrom:
                 secretKeyRef:

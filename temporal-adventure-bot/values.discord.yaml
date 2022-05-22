@@ -1,0 +1,11 @@
+# Default values for temporal-adventure-bot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: "temporal-discord-adventure-bot"
+fullnameOverride: "temporal-discord-adventure-bot"
+
+socialPlatform: discord
+
+service:
+  port: 3002

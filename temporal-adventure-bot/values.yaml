@@ -14,6 +14,8 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+socialPlatform: slack
+slackChannel: C03GF9VQP34
 slackBotToken: default
 slackSigningSecret: default
 
