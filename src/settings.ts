@@ -2,7 +2,7 @@ export const settings = {
   /**
    * How frequently to post and check for choice consensus.
    */
-  interval: "10m",
+  interval: "1 day",
 
 } as const;
 

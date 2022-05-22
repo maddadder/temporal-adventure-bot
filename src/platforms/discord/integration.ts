@@ -15,9 +15,9 @@ import {
 import { getDiscordClient } from "./client";
 
 export class DiscordIntegration implements Integration {
-  #channel: discord.TextBasedChannels;
+  #channel: discord.TextBasedChannel;
 
-  private constructor(channel: discord.TextBasedChannels) {
+  private constructor(channel: discord.TextBasedChannel) {
     this.#channel = channel;
   }
 

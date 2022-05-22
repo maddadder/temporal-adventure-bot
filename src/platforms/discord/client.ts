@@ -6,6 +6,7 @@ export const getDiscordClient = async () => {
       discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
       discord.Intents.FLAGS.GUILD_MESSAGES,
       discord.Intents.FLAGS.GUILDS,
+      discord.Intents.FLAGS.GUILD_INTEGRATIONS
     ],
   });
 
