@@ -2,9 +2,11 @@ import { Worker, NativeConnection } from '@temporalio/worker';
 
 import { createActivities } from "./activities";
 import { platformFactory } from "./platforms/factory";
-import { settings } from "./settings";
+import { getEnv } from "./settings";
 
 async function run() {
+  console.log("getEnv");
+  const environment = getEnv()
   console.log("platformFactory");
   const { createIntegration } = platformFactory();
   console.log("createIntegration");
@@ -32,7 +34,7 @@ async function run() {
         },
       },
     },
-    taskQueue: settings.taskQueue,
+    taskQueue: environment.TASK_QUEUE,
   });
   console.log("worker.run");
   await worker.run();

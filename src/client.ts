@@ -2,15 +2,16 @@ import { Connection, WorkflowClient } from "@temporalio/client";
 
 import { receiveCommandText } from "./api/force";
 import { platformFactory } from "./platforms/factory";
-import { settings } from "./settings";
+import { getEnv, settings } from "./settings";
 import { instructions, runGame } from "./workflows";
 
-const executionOptions = {
-  taskQueue: settings.taskQueue,
-  workflowId: settings.workflowId,
-};
-
 async function run() {
+  console.log("getEnv");
+  const environment = getEnv()
+  const executionOptions = {
+    taskQueue: environment.TASK_QUEUE,
+    workflowId: environment.WORKFLOW_ID,
+  };
   console.log("1. Create a connection to the Temporal service and a workflow client against it")
   const connection = new Connection({
     // // Connect to localhost with default ConnectionOptions.

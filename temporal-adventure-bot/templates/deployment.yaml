@@ -62,6 +62,19 @@ spec:
                 secretKeyRef:
                   key: slackSigningSecret
                   name: {{ .Release.Name }}-auth
+            - name: "DISCORD_BOT_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  key: discordBotToken
+                  name: {{ .Release.Name }}-auth
+            - name: "DISCORD_CHANNEL"
+              value: "{{ .Values.discordChannel }}"
+            - name: "WORKFLOW_ID"
+              value: "{{ .Values.workflowId }}"
+            - name: "TASK_QUEUE"
+              value: "{{ .Values.taskQueue }}"
+            - name: "PORT"
+              value: "{{ .Values.service.port }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

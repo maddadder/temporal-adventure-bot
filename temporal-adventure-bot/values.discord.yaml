@@ -9,3 +9,6 @@ socialPlatform: discord
 
 service:
   port: 3002
+
+workflowId: my-discord-adventure-bot
+taskQueue: discord-adventure-bot

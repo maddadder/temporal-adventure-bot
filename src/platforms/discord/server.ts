@@ -1,6 +1,6 @@
 import express from "express";
 
-import { settings } from "../../settings";
+import { getEnv } from "../../settings";
 import { HandleText } from "../types";
 import { getDiscordClient } from "./client";
 
@@ -48,8 +48,8 @@ export const createDiscordExpressServer = async (handleText: HandleText) => {
       .send("Discord added! You may close this window. 💯")
       .end();
   });
-
-  const server = app.listen(settings.port);
+  const environment = getEnv()
+  const server = app.listen(environment.PORT);
 
   return () => {
     server.close();

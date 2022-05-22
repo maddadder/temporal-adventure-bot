@@ -1,6 +1,6 @@
 import express from "express";
 
-import { settings } from "../../settings";
+import { getEnv, settings } from "../../settings";
 import { HandleText } from "../types";
 
 interface SlackMessageBody {
@@ -25,7 +25,8 @@ export const createSlackExpressServer = async (handleText: HandleText) => {
     response.status(200).send(message).end();
   });
   console.log("app.listen")
-  const server = app.listen(settings.port);
+  const environment = getEnv()
+  const server = app.listen(environment.PORT);
 
   return () => {
     server.close();

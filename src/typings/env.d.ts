@@ -5,5 +5,8 @@ declare namespace NodeJS {
     SLACK_BOT_TOKEN: string;
     SLACK_CHANNEL: string;
     SLACK_SIGNING_SECRET: string;
+    PORT: string;
+    TASK_QUEUE: string;
+    WORKFLOW_ID: string;
   }
 }

@@ -4,18 +4,17 @@ export const settings = {
    */
   interval: "10m",
 
-  /**
-   * Ngrok server port to listen for server messages on.
-   */
-  port: 3001,
-
-  /**
-   * Temporal task queue to run execution in.
-   */
-  taskQueue: "adventure-bot",
-
-  /**
-   * Temporal Workflow ID to run execution under.
-   */
-  workflowId: "my-adventure-bot",
 } as const;
+
+export function getEnv(): NodeJS.ProcessEnv {
+  return {
+    DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN,
+    DISCORD_CHANNEL: process.env.DISCORD_CHANNEL,
+    SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN,
+    SLACK_CHANNEL: process.env.SLACK_CHANNEL,
+    SLACK_SIGNING_SECRET: process.env.SLACK_SIGNING_SECRET,
+    PORT: process.env.PORT,
+    TASK_QUEUE: process.env.TASK_QUEUE,
+    WORKFLOW_ID: process.env.WORKFLOW_ID,
+  };
+}

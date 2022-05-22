@@ -19,6 +19,13 @@ slackChannel: C03GF9VQP34
 slackBotToken: default
 slackSigningSecret: default
 
+discordBotToken: default
+
+discordChannel: "977782882112270377"
+
+workflowId: my-adventure-bot
+taskQueue: adventure-bot
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
