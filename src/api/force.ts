@@ -56,8 +56,8 @@ const parseCommandText = (text: string) => {
 
 export const printForced = (forced: ForceInput) => {
   const printed =
-    forced === "random" ? "randomly" : `:${indexToEmojiName[forced - 1]}:`;
-
+    forced === "random" ? "randomly" : `:${indexToEmojiName[forced]}:`;
+  
   return `🐌🙄 y'all took too long to choose! An admin has chosen *${printed}* for you.`;
 };
 
