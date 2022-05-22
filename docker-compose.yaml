@@ -3,7 +3,7 @@ version: '2'
 services:
 
   temporal-adventure-bot:
-    image: 192.168.1.151:32000/temporal-adventure-bot:1.22.96
+    image: 192.168.1.151:32000/temporal-adventure-bot:1.22.98
     build:
       context: ./
       dockerfile: ./Dockerfile

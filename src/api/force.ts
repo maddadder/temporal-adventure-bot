@@ -17,7 +17,22 @@ export const getForcedChoice = async (options: GameOption[]) => {
   });
 
   await wf.condition(() => forced !== undefined);
-
+  if(forced == undefined){
+    //do nothing
+  }
+  else if (forced === "random"){
+    //do nothing
+  }
+  else if(forced >= options.length){
+    forced = options.length - 1 //0 based indexing
+  }
+  else if(forced <= 0){
+    forced = 0;
+  }
+  else
+  {
+    forced = forced-1;
+  }
   const entry =
     forced === "random"
       ? options[Math.floor(Math.random() * options.length)]
@@ -36,7 +51,7 @@ const parseCommandText = (text: string) => {
 
   const next = parseInt(text);
 
-  return isNaN(next) ? undefined : next + 1; // Use 1-based instead of 0-based to be user-friendly
+  return isNaN(next) ? undefined : next; 
 };
 
 export const printForced = (forced: ForceInput) => {
@@ -56,6 +71,10 @@ export const receiveCommandText = async (
   }
 
   await gameHandle.signal(forceSignal, next);
-
-  return `👍 You got it! Going with *${next}*.`;
+  if (next === "random"){
+    return `👍 You got it! Going with *${next}*.`;
+  }
+  else {
+    return `👍 You got it! Going with *${next}*.`; // Use 1-based instead of 0-based to be user-friendly
+  }
 };
