@@ -138,7 +138,6 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
 ```
 ### Deploy
 ```
-docker-compose build
-docker push 192.168.1.151:32000/temporal-adventure-bot:1.22.74
-helm upgrade temporal-adventure-bot ./temporal-adventure-bot
+# run the following
+./deploy.example.sh
 ```

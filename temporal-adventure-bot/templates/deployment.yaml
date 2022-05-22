@@ -47,6 +47,21 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "SOCIAL_PLATFORM"
+              value: "slack"
+            - name: "SLACK_BOT_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  key: slackBotToken
+                  name: {{ .Release.Name }}-auth
+            - name: "SLACK_CHANNEL"
+              value: "C03GF9VQP34"
+            - name: "SLACK_SIGNING_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  key: slackSigningSecret
+                  name: {{ .Release.Name }}-auth
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
