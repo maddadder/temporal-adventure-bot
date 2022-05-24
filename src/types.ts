@@ -3,10 +3,11 @@ export interface GameOptions {
 }
 
 export interface Game {
-  [i: string]: GameEntry;
+  gameEntries: GameEntry[];
 }
 
 export interface GameEntry {
+  name: string;
   description: string[];
   options?: GameOption[];
 }

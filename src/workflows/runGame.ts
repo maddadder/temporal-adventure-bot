@@ -15,8 +15,19 @@ export interface RunGameOptions {
 
 export async function runGame({ entry }: RunGameOptions) {
   logger.info("Running game at", entry);
-
-  const { options } = game[entry];
+  const gameEntries = game.gameEntries.filter((x) => x.name == entry);
+  if(gameEntries.length == 0){
+    logger.info("No choice: the game is over.");
+    await activities.postMessage({
+      notify: true,
+      text: `
+      ...and, that is the end of the game. Thanks for playing everyone! :end:
+      `.trim(),
+    });
+    return;
+  }
+  const gameEntry = gameEntries[0]
+  const { options } = gameEntry;
 
   // 1. If the entry has no options, the game is over
   if (!options) {
@@ -24,7 +35,7 @@ export async function runGame({ entry }: RunGameOptions) {
     await activities.postMessage({
       notify: true,
       text: `
-${game[entry].description.join("\n")}
+${gameEntry.description.join("\n")}
 ...and, that's the end of the game. Thanks for playing everyone! :end:
 `.trim(),
     });
@@ -34,7 +45,7 @@ ${game[entry].description.join("\n")}
   // 2. Post the current entry as a poll
   const announcement = await activities.createPoll({
     choices: options.map((option) => option.description),
-    prompt: `${formatEntryData(game[entry])}`,
+    prompt: `${formatEntryData(gameEntry)}`,
   });
   logger.info(`Posted poll with message ID ${announcement}.`);
 

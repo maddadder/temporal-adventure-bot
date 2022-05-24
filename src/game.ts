@@ -9,8 +9,11 @@ const happilyEverAfter = [
 
 const poorDeath = `Unable to make a profit from Bessy, your family falls on even harder times and loses your farm and house. 17th century England has no social protection programs and the entire family all dies miserably.`;
 
-export const game: Game = {
-  acceptCards: {
+export const game: Game = 
+{
+  gameEntries: [
+  {
+    name: "acceptCards",
     description: [
       `A friendly game of cards with the new neighbors seems like a fun idea.`,
       `You follow Blunderbore through the mansion to a living room dominated by a massive table underneath several small stacks of large playing cards.`,
@@ -35,7 +38,8 @@ export const game: Game = {
       },
     ],
   },
-  acceptWager: {
+  {
+    name: "acceptWager",
     description: [
       `Your last two days have already gone bizarrely. Might as well double down.`,
       `You place your trusty rake on the table with the bag of gold and glass of milk.`,
@@ -50,7 +54,8 @@ export const game: Game = {
       ...happilyEverAfter,
     ],
   },
-  begin: {
+  {
+    name: "begin",
     description: [
       `Good morning, Jack Spriggins! It's a beautiful day in 18th century England. Your family farm, plagued by thievery and misfortune, has fallen on hard times. Your parents told you to sell your beloved old pet cow Bessy for coin to purchase more chickens. The market is opening soon and you should take Bessy to be sold.`,
     ],
@@ -69,7 +74,8 @@ export const game: Game = {
       },
     ],
   },
-  bond: {
+  {
+    name: "bond",
     description: [
       `You can still remember the day your parents took in Bessy as a pet. She was a gentle cow who never kicked anybody or ate more than her share of grass. Truly a gentle and kind spirit.`,
       `These days she doesn't have the same fire in her spirit or jump in her step the way she used to. Yet she still lumbers over to the door to greet you as you take her her morning feed snack. You reward her spirit with gentle pets and scratches in the spot behind her ear she enjoys so much.`,
@@ -77,14 +83,16 @@ export const game: Game = {
       poorDeath,
     ],
   },
-  burn: {
+  {
+    name: "burn",
     description: [
       `Clearly the hooded figure was a demon! Such witchcraft cannot be tolerated!`,
       `You douse the beanstalk in what little oil your family has left and light it on fire.`,
       poorDeath,
     ],
   },
-  cut: {
+  {
+    name: "cut",
     description: [
       `Clearly the hooded figure was an angel! Such a bountiful supply of material could provide your family with firewood to use and sell for months and months.`,
       `You hack away into the trunk of the beanstalk until it falls down across the length of your pastures.`,
@@ -94,7 +102,8 @@ export const game: Game = {
       ...happilyEverAfter,
     ],
   },
-  climb: {
+  {
+    name:"climb",
     description: [
       `If the beanstalk goes up all the way past the clouds, surely there must be treasure up above!`,
       `The sides of the beanstalk are rough enough that you're able to climb all the way up using your trusty rake as a walking stick.`,
@@ -119,14 +128,16 @@ export const game: Game = {
       },
     ],
   },
-  declineCards: {
+  {
+    name:"declineCards",
     description: [
       `You thank Blunderbore for the kind invite and graciously excuse yourself as needing to attend to the family farm.`,
       `The two of you cheerfully wish each other good tidings before you make your way back down the beanstalk.`,
       poorDeath,
     ],
   },
-  declineWager: {
+  {
+    name: "declineWager",
     description: [
       `You don't feel comfortable committing to such a wager when you don't comprehend the game itself.`,
       `Both seem a little disappointed.`,
@@ -134,7 +145,8 @@ export const game: Game = {
       poorDeath,
     ],
   },
-  introduce: {
+  {
+    name:"introduce",
     description: [
       `Elevation levels notwithstanding, you suppose this giant is your neighbor and it would only be proper to politely introduce yourself as such.`,
       `The giant introduces himself as Blunderbore and the two of you have a pleasant chat.`,
@@ -151,7 +163,8 @@ export const game: Game = {
       },
     ],
   },
-  knock: {
+  {
+    name:"knock",
     description: [
       `You knock politely on the front door of the mansion.`,
       `A minute passes by with no response.`,
@@ -167,7 +180,8 @@ export const game: Game = {
       },
     ],
   },
-  knockLoudly: {
+  {
+    name:"knockLoudly",
     description: [
       `You knock loudly on the front door of the mansion.`,
       `A booming voice bellows out from within: _"coming!"_.`,
@@ -185,7 +199,8 @@ export const game: Game = {
       },
     ],
   },
-  market: {
+  {
+    name:"market",
     description: [
       `Bessy is a good old cow and follows you to the market without resistance. You try bringing her to several booths to trade but nobody wants an old cow.`,
       `After a few grueling hours of haggling and pleading, you're just about ready to go home...`,
@@ -209,21 +224,24 @@ export const game: Game = {
       },
     ],
   },
-  nope: {
+  {
+    name: "nope",
     description: [
       `There be giants. Your parents raised you better than to meddle in the affairs of gigantic mythical creatures.`,
       `You nope on out of there and make your way back home.`,
       poorDeath,
     ],
   },
-  refuseBeans: {
+  {
+    name: "refuseBeans",
     description: [
       `You roll your eyes at the figure. Nobody with two shillings of sense would accept such a ludicrous offer.`,
       `You take Bessy home and enjoy an afternoon relaxing together.`,
       poorDeath,
     ],
   },
-  scream: {
+  {
+    name: "scream",
     description: [
       `Ack! A giant!`,
       `You scream in terror and bolt back to the beanstalk, dropping your rake behind you.`,
@@ -232,19 +250,22 @@ export const game: Game = {
       poorDeath,
     ],
   },
-  sleep: {
+  {
+    name: "sleep",
     description: [
       `You enjoy a few more hours of glorious blissful sleep. Sadly, when you wake up, you find Bessy passed away in her old age.`,
       poorDeath,
     ],
   },
-  sloth: {
+  {
+    name: "sloth",
     description: [
       `You enjoy a few more hours of glorious blissful sleep and continue as if nothing was different.`,
       poorDeath,
     ],
   },
-  sneak: {
+  {
+    name: "sneak",
     description: [
       `Curiosity overtakes you and you hoist yourself onto a partially open first floor window to peek inside. You can't see or hear anybody in the mansion.`,
       `You wedge the window open with your trusty rake and slink inside. The room you enter is a long hallway with closed doors on either end. You walk towards one of the doors.`,
@@ -259,7 +280,8 @@ export const game: Game = {
       poorDeath,
     ],
   },
-  stealBeans: {
+  {
+    name: "stealBeans",
     description: [
       `You roll your eyes and sneer at the figure. Only a fool would bring magic items to the market without guards to protect them.`,
       `Quick as a whip, you lunge forward and reach for the figure...`,
@@ -267,7 +289,8 @@ export const game: Game = {
       poorDeath,
     ],
   },
-  takeBeans: {
+  {
+    name: "takeBeans",
     description: [
       `Desperate and intrigued, you agree to trade your dear old Bessy for the dubious magic beans.`,
       `The stranger seems mysterious enough that the beans might be legit -- and Bessy is at the end of her rope anyway.`,
@@ -293,5 +316,5 @@ export const game: Game = {
         next: `climb`,
       },
     ],
-  },
+  }],
 };
