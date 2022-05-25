@@ -1,8 +1,11 @@
+import { Game } from "../types";
+
 export interface Integration {
   createPoll: CreatePoll;
   getReactions: GetReactions;
   pinMessage: PinMessage;
   postMessage: PostMessage;
+  getGame: GetGame;
 }
 
 export type MessageId = string;
@@ -31,3 +34,5 @@ export interface PostMessageOptions {
 export type PostMessage = (options: PostMessageOptions) => Promise<MessageId>;
 
 export type HandleText = (text: string) => Promise<string>;
+
+export type GetGame = (name: string) => Promise<Game>;

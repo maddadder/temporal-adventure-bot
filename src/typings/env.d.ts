@@ -8,5 +8,10 @@ declare namespace NodeJS {
     PORT: string;
     TASK_QUEUE: string;
     WORKFLOW_ID: string;
+    COUCHBASE_USER: string;
+    COUCHBASE_PASSWORD: string;
+    COUCHBASE_ENDPOINT: string;
+    COUCHBASE_BUCKET: string;
+    IS_CAPELLA: string;
   }
 }

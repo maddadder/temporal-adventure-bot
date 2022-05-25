@@ -1,7 +1,6 @@
 import { continueAsNew } from "@temporalio/workflow";
 
 import { getForcedChoice, printForced } from "../api/force";
-import { game } from "../game";
 import { logger } from "../logger";
 import { settings } from "../settings";
 import { formatEntryData } from "../utils/entries";
@@ -15,6 +14,7 @@ export interface RunGameOptions {
 
 export async function runGame({ entry }: RunGameOptions) {
   logger.info("Running game at", entry);
+  const game = await activities.getGame("UNUSED_GAME_NAME");
   const gameEntries = game.gameEntries.filter((x) => x.name == entry);
   if(gameEntries.length == 0){
     logger.info("No choice: the game is over.");

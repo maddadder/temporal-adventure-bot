@@ -48,6 +48,19 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: "COUCHBASE_USER"
+              value: "{{ .Values.couchbaseUser }}"
+            - name: "COUCHBASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  key: couchbasePassword
+                  name: {{ .Release.Name }}-auth
+            - name: "COUCHBASE_ENDPOINT"
+              value: "{{ .Values.couchbaseEndpoint }}"
+            - name: "COUCHBASE_BUCKET"
+              value: "{{ .Values.couchbaseBucket }}"
+            - name: "IS_CAPELLA"
+              value: "{{ .Values.isCapella }}"
             - name: "SOCIAL_PLATFORM"
               value: {{ .Values.socialPlatform }}
             - name: "SLACK_BOT_TOKEN"

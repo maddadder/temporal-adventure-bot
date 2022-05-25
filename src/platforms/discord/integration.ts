@@ -1,4 +1,5 @@
 import * as discord from "discord.js";
+import { game } from "../../game";
 
 import {
   emojiNameToIndex,
@@ -55,7 +56,9 @@ export class DiscordIntegration implements Integration {
 
     return message.id;
   }
-
+  async getGame(name: string) {
+    return game;
+  }
   static create = async () => {
     const client = await getDiscordClient();
     const channel = await client.channels.fetch(process.env.DISCORD_CHANNEL);
