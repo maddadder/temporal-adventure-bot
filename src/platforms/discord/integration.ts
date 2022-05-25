@@ -1,5 +1,6 @@
 import * as discord from "discord.js";
-import { game } from "../../game";
+import { Game, GameEntry } from "../../types";
+import { connectToDatabase } from "../../utils/couchbase";
 
 import {
   emojiNameToIndex,
@@ -57,6 +58,17 @@ export class DiscordIntegration implements Integration {
     return message.id;
   }
   async getGame(name: string) {
+    const { bucket } = await connectToDatabase();
+    var query = "SELECT p.* FROM `default`.`_default`.`_default` p WHERE __T = 'ge' ORDER BY p.modified ASC LIMIT 100 OFFSET 0";
+    // Perform a N1QL Query
+    const queryResult = await bucket
+    .scope('_default')
+    .query(query)
+    console.log(query)
+    const game: Game = { gameEntries:[] };
+    queryResult.rows.forEach((row:GameEntry) => {
+      game.gameEntries.push(row);
+    })
     return game;
   }
   static create = async () => {
