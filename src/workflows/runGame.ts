@@ -41,7 +41,13 @@ ${gameEntry.description.join("\n")}
     });
     return;
   }
-
+  while(formatEntryData(gameEntry).length > 2000){
+    var message = gameEntry.description.shift();
+    await activities.postMessage({
+      notify: false,
+      text: message ?? "",
+    });
+  }
   // 2. Post the current entry as a poll
   const announcement = await activities.createPoll({
     choices: options.map((option) => option.description),

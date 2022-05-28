@@ -31,7 +31,7 @@ export const emojiSymbolToName = Object.fromEntries(
 );
 
 export function formatEntryData(entry: GameEntry) {
-  if (!entry.options) {
+  if (!entry.options || entry.options.length == 0) {
     return entry.description.join("\n");
   }
 
