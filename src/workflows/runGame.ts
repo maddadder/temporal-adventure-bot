@@ -30,7 +30,7 @@ export async function runGame({ entry }: RunGameOptions) {
   const { options } = gameEntry;
 
   // 1. If the entry has no options, the game is over
-  if (!options) {
+  if (!options || options.length == 0) {
     logger.info("No choice: the game is over.");
     await activities.postMessage({
       notify: true,
