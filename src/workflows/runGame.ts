@@ -4,6 +4,7 @@ import { getForcedChoice, printForced } from "../api/force";
 import { logger } from "../logger";
 import { settings } from "../settings";
 import { formatEntryData } from "../utils/entries";
+import { chunk } from "../utils/helpers";
 import { checkRepeatedly } from "../utils/repeats";
 import { collectConsensus } from "../utils/voting";
 import { activities } from "./activities";
@@ -26,6 +27,7 @@ export async function runGame({ entry }: RunGameOptions) {
     });
     return;
   }
+  const MAX_MESSAGE_SIZE = 1500;
   const gameEntry = gameEntries[0]
   const { options } = gameEntry;
 
@@ -41,27 +43,40 @@ ${gameEntry.description.join("\n")}
     });
     return;
   }
-  
-  // 2. Send large game content to the client first.
-  while(formatEntryData(gameEntry).length > 1500){
-    let largeMessage:string[] = [];
-    while(largeMessage.join("\n").length < 1500){
-      largeMessage.push(gameEntry.description.shift() ?? "");
+
+  // 2. Send large game content to the client before sending the poll.
+  while(formatEntryData(gameEntry).length > MAX_MESSAGE_SIZE){
+
+    let largeMessages:string[] = [];
+    // 2.1 Remove messages from gameEntry.description and place them in largeMessages array
+    while(largeMessages.join("\n").length < MAX_MESSAGE_SIZE){
+      largeMessages.push(gameEntry.description.shift() ?? "");
     }
-    await activities.postMessage({
-      notify: true,
-      text: largeMessage.join("\n"),
-    });
+
+    let giantMessage = largeMessages.join("\n")
+    // 2.2 chunk up giantMessage into messageChunks and send them out
+    let messageChunks = chunk(giantMessage,MAX_MESSAGE_SIZE);
+    for(let i=0;i<messageChunks.length;i++){
+      await activities.postMessage({
+        notify: true,
+        text: messageChunks[i],
+      });
+    }
   }
 
-  // 3. Post the current entry as a poll
+  // 3. ensure there is at least one description, even if it is an empty message
+  if(gameEntry.description.length == 0){
+    gameEntry.description.push("");
+  }
+
+  // 4. Post the current entry as a poll with the remaining content
   const announcement = await activities.createPoll({
     choices: options.map((option) => option.description),
     prompt: `${formatEntryData(gameEntry)}`,
   });
   logger.info(`Posted poll with message ID ${announcement}.`);
 
-  // 4. Check and remind people to vote once a day until either...
+  // 5. Check and remind people to vote once a day until either...
   // * ...a choice is made by consensus
   // * ...an admin forces a choice
   const { choice, forced } = await Promise.race([
@@ -94,7 +109,7 @@ ${gameEntry.description.join("\n")}
     getForcedChoice(options),
   ]);
 
-  // 5. If the choice was forced by an admin, mention that
+  // 6. If the choice was forced by an admin, mention that
   if (forced !== undefined) {
     logger.info("Forcing choice from:", forced);
     await activities.postMessage({
@@ -102,7 +117,7 @@ ${gameEntry.description.join("\n")}
     });
   }
 
-  // 6. Continue with that chosen next step in the game
+  // 7. Continue with that chosen next step in the game
   logger.info("Received choice to continue:", choice);
   await continueAsNew({ entry: choice });
 }
