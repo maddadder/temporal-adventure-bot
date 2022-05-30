@@ -6,6 +6,7 @@ import { Game, GameEntry } from "../../types";
 import {connectToDatabase} from "../../utils/couchbase"
 
 import { emojiNameToIndex, indexToEmojiName } from "../../utils/entries";
+import { chunk } from "../../utils/helpers";
 import {
   CreatePollOptions,
   Integration,
@@ -21,7 +22,7 @@ const throwIfError = (response: WebAPICallResult, defaultMessage?: string) => {
 
 export class SlackIntegration implements Integration {
   #slack: bolt.App;
-
+  MAX_MESSAGE_SIZE = 1500;
   constructor() {
     this.#slack = new bolt.App({
       signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -68,8 +69,6 @@ export class SlackIntegration implements Integration {
   }
 
   async pinMessage(messageId: MessageId) {
-    console.log('pinMessage to slack channel')
-    console.log(process.env.SLACK_CHANNEL)
     throwIfError(
       await this.#slack.client.pins.add({
         channel: process.env.SLACK_CHANNEL,
@@ -80,22 +79,28 @@ export class SlackIntegration implements Integration {
   }
 
   async postMessage({ notify, text }: PostMessageOptions) {
-    console.log('postMessage to slack channel')
-    console.log(process.env.SLACK_CHANNEL)
-    const response = await this.#slack.client.chat.postMessage({
-      channel: process.env.SLACK_CHANNEL,
-      text: notify ? `<!here> ${text}` : text,
-    });
+    let messageChunks = chunk(text,this.MAX_MESSAGE_SIZE);
+    let response = undefined;
+    for(let i=0;i<messageChunks.length;i++){
+      response = await this.#slack.client.chat.postMessage({
+        channel: process.env.SLACK_CHANNEL,
+        text: notify ? `<!here> ${messageChunks[i]}` : messageChunks[i],
+      });
+    }
+    
 
     // Slack keeps timestamps as equivalents to unique IDs for messages.
     // https://api.slack.com/messaging/retrieving#individual_messages
-    const messageId = response.message?.ts;
 
-    if (!messageId) {
-      throw new Error(response.error ?? "Could not post message");
+    if (!response || !response.message?.ts) {
+      if(response)
+        throw new Error(response.error ?? "Could not post message");
+      else{
+        throw new Error("Could not post message because the message was blank");
+      }
     }
 
-    return messageId;
+    return response.message?.ts;
   }
   async getGame(name: string) {
     const { bucket } = await connectToDatabase();

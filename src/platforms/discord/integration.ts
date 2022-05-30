@@ -8,6 +8,7 @@ import {
   emojiSymbolToName,
   indexToEmojiName,
 } from "../../utils/entries";
+import { chunk } from "../../utils/helpers";
 import {
   CreatePollOptions,
   Integration,
@@ -18,19 +19,27 @@ import { getDiscordClient } from "./client";
 
 export class DiscordIntegration implements Integration {
   #channel: discord.TextBasedChannel;
-
+  MAX_MESSAGE_SIZE = 1500;
   private constructor(channel: discord.TextBasedChannel) {
     this.#channel = channel;
   }
 
-  async createPoll(options: CreatePollOptions) {
-    const message = await this.#channel.send(options.prompt);
-
-    for (let i = 0; i < options.choices.length; i += 1) {
-      await message.react(emojiNameToSymbol[indexToEmojiName[i]]);
+  async createPoll(options: CreatePollOptions) 
+  {
+    let message = undefined;
+    let messageChunks = chunk(options.prompt,this.MAX_MESSAGE_SIZE);
+    for(let i=0;i<messageChunks.length;i++){
+      message = await this.#channel.send(messageChunks[i]);
     }
-
-    return message.id;
+    if(message != undefined){
+      for (let i = 0; i < options.choices.length; i += 1) {
+        await message.react(emojiNameToSymbol[indexToEmojiName[i]]);
+      }
+      return message.id;
+    }
+    else{
+      throw new Error("Could not create poll because the message was blank");
+    }
   }
 
   async getReactions(messageId: MessageId) {
@@ -51,11 +60,21 @@ export class DiscordIntegration implements Integration {
   }
 
   async postMessage({ notify, text }: PostMessageOptions) {
-    const message = await this.#channel.send(
-      notify ? `${this.#channel} ${text}` : text
-    );
-
-    return message.id;
+    let message = undefined;
+    let messageChunks = chunk(text,this.MAX_MESSAGE_SIZE);
+    for(let i=0;i<messageChunks.length;i++){
+      message = await this.#channel.send(
+        notify ? `${this.#channel} ${messageChunks[i]}` : messageChunks[i]
+      );
+    }
+    
+    if(message != undefined){
+      return message.id;
+    }
+    else
+    {
+      throw new Error("Could not post message because the message was blank");
+    }
   }
   async getGame(name: string) {
     const { bucket } = await connectToDatabase();
