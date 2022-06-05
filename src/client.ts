@@ -1,5 +1,5 @@
 import { Connection, WorkflowClient } from "@temporalio/client";
-
+import { WorkflowExecutionAlreadyStartedError } from '@temporalio/common';
 import { receiveCommandText } from "./api/force";
 import { platformFactory } from "./platforms/factory";
 import { getEnv, settings } from "./settings";
@@ -24,6 +24,9 @@ async function run() {
   console.log("1.1. Retrieve a handle to the client workflow so admin commands can signal to it")
   const gameHandle = client.getHandle(executionOptions.workflowId);
 
+  console.log("1.1.1 Terminate any active running workflow");
+  
+
   console.log("1.2. Start an HTTP server to receive /force commands")
   const { createServer } = platformFactory();
   const closeServer = await createServer(
@@ -31,7 +34,14 @@ async function run() {
   );
 
   console.log("2. Log and pin channel-wide instructions just once")
-  await client.execute(instructions, executionOptions);
+  try {
+    await client.execute(instructions, executionOptions);
+  } catch (e: any) {
+    if (e instanceof WorkflowExecutionAlreadyStartedError) {
+      console.log('Already started workflow ' + executionOptions.workflowId);
+    }
+  }
+  
 
   console.log("3. Start the workflow that checks once a day for choice consensus")
   const runningGame = client.execute(runGame, {
@@ -44,7 +54,14 @@ async function run() {
   });
 
   console.log("6. Wait for the result of finishing the game, then close the server")
-  await runningGame;
+  try {
+    await runningGame;
+  } catch (e: any) {
+    if (e instanceof WorkflowExecutionAlreadyStartedError) {
+      console.log('Already started workflow ' + executionOptions.workflowId);
+      await gameHandle.result();
+    }
+  }
   closeServer();
 }
 
