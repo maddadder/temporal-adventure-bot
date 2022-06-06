@@ -34,5 +34,5 @@ export interface PostMessageOptions {
 export type PostMessage = (options: PostMessageOptions) => Promise<MessageId>;
 
 export type HandleText = (text: string) => Promise<string>;
-
+export type GetStatus = (text: string) => Promise<string>;
 export type GetGame = (name: string) => Promise<Game>;

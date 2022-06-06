@@ -1,6 +1,7 @@
 import { Connection, WorkflowClient } from "@temporalio/client";
 import { WorkflowExecutionAlreadyStartedError } from '@temporalio/common';
 import { receiveCommandText } from "./api/force";
+import { queryState } from "./api/query";
 import { platformFactory } from "./platforms/factory";
 import { getEnv, settings } from "./settings";
 import { instructions, runGame } from "./workflows";
@@ -30,7 +31,8 @@ async function run() {
   console.log("1.2. Start an HTTP server to receive /force commands")
   const { createServer } = platformFactory();
   const closeServer = await createServer(
-    async (text) => await receiveCommandText(gameHandle, text)
+    async (text) => await receiveCommandText(gameHandle, text),
+    async (text) => await queryState(gameHandle, text)
   );
 
   console.log("2. Log and pin channel-wide instructions just once")

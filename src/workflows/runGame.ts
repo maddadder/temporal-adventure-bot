@@ -4,17 +4,20 @@ import { getForcedChoice, printForced } from "../api/force";
 import { logger } from "../logger";
 import { settings } from "../settings";
 import { formatEntryData } from "../utils/entries";
-import { chunk } from "../utils/helpers";
 import { checkRepeatedly } from "../utils/repeats";
 import { collectConsensus } from "../utils/voting";
 import { activities } from "./activities";
+import * as wf from "@temporalio/workflow";
 
 export interface RunGameOptions {
   entry: string;
 }
 
+export const stateQuery = wf.defineQuery<string>('gamestate');
+
 export async function runGame({ entry }: RunGameOptions) {
   logger.info("Running game at", entry);
+  wf.setHandler(stateQuery, () => entry);
   const game = await activities.getGame("UNUSED_GAME_NAME");
   const gameEntries = game.gameEntries.filter((x) => x.name == entry);
   if(gameEntries.length == 0){

@@ -1,10 +1,10 @@
 import express from "express";
 
 import { getEnv } from "../../settings";
-import { HandleText } from "../types";
+import { GetStatus, HandleText } from "../types";
 import { getDiscordClient } from "./client";
 
-export const createDiscordExpressServer = async (handleText: HandleText) => {
+export const createDiscordExpressServer = async (handleText: HandleText, getStatus: GetStatus) => {
 
   const client = await getDiscordClient();
 
@@ -42,10 +42,11 @@ export const createDiscordExpressServer = async (handleText: HandleText) => {
 
   const app = express().use(express.urlencoded({ extended: true }));
 
-  app.get("/", (_, response) => {
+  app.get("/", async (_, response) => {
+    const message = await getStatus("UNUSED_PARAM");
     response
       .status(200)
-      .send("Discord added! You may close this window. 💯")
+      .send(message)
       .end();
   });
   const environment = getEnv()
