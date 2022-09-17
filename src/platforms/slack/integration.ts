@@ -104,7 +104,7 @@ export class SlackIntegration implements Integration {
   }
   async getGame(name: string) {
     const { bucket } = await connectToDatabase();
-    var query = "SELECT p.* FROM `default`.`_default`.`_default` p WHERE __T = 'ge' ORDER BY p.modified ASC LIMIT 100 OFFSET 0";
+    var query = "SELECT p.* FROM `default`.`_default`.`_default` p WHERE __T = 'ge' AND p.name = '" + name + "' ORDER BY p.modified ASC LIMIT 100 OFFSET 0";
     // Perform a N1QL Query
     const queryResult = await bucket
     .scope('_default')

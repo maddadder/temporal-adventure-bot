@@ -22,20 +22,17 @@ async function run() {
   });
   const client = new WorkflowClient(connection.service);
 
-  console.log("1.1. Retrieve a handle to the client workflow so admin commands can signal to it")
+  console.log("2. Retrieve a handle to the client workflow so admin commands can signal to it")
   const gameHandle = client.getHandle(executionOptions.workflowId);
 
-  console.log("1.1.1 Terminate any active running workflow");
-  
-
-  console.log("1.2. Start an HTTP server to receive /force commands")
+  console.log("3. Start an HTTP server to receive /force commands")
   const { createServer } = platformFactory();
   const closeServer = await createServer(
-    async (text) => await receiveCommandText(gameHandle, text),
-    async (text) => await queryState(gameHandle, text)
+    /*handleText:*/ async (text) => await receiveCommandText(gameHandle, text),
+    /*getStatus: */ async (text) => await queryState(gameHandle, text)
   );
 
-  console.log("2. Log and pin channel-wide instructions just once")
+  console.log("4. Log and pin channel-wide instructions just once")
   try {
     await client.execute(instructions, executionOptions);
   } catch (e: any) {
@@ -45,7 +42,7 @@ async function run() {
   }
   
 
-  console.log("3. Start the workflow that checks once a day for choice consensus")
+  console.log("5. Start the workflow that checks once a day for choice consensus")
   const runningGame = client.execute(runGame, {
     args: [
       {
@@ -64,6 +61,7 @@ async function run() {
       await gameHandle.result();
     }
   }
+  console.log("7. Closing Server")
   closeServer();
 }
 

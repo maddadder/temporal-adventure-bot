@@ -18,7 +18,7 @@ export const stateQuery = wf.defineQuery<string>('gamestate');
 export async function runGame({ entry }: RunGameOptions) {
   logger.info("Running game at", entry);
   wf.setHandler(stateQuery, () => entry);
-  const game = await activities.getGame("UNUSED_GAME_NAME");
+  const game = await activities.getGame(entry);
   const gameEntries = game.gameEntries.filter((x) => x.name == entry);
   if(gameEntries.length == 0){
     logger.info("No choice: the game is over.");
