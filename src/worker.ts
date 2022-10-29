@@ -13,7 +13,7 @@ async function run() {
   const integration = await createIntegration();
   console.log("Worker.create");
   const connection = await NativeConnection.create({
-    address: 'temporaltest-frontend-headless', // defaults port to 7233 if not specified
+    address: environment.TEMPORAL_ADDRESS, // defaults port to 7233 if not specified
   });
   const worker = await Worker.create({
     connection,

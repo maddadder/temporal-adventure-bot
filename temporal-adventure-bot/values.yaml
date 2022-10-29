@@ -31,7 +31,7 @@ discordChannel: "977782882112270377"
 
 workflowId: my-adventure-bot
 taskQueue: adventure-bot
-
+temporalAddress: temporaltest-frontend-headless.default.svc.cluster.local
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

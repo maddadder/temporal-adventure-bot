@@ -13,5 +13,6 @@ declare namespace NodeJS {
     COUCHBASE_ENDPOINT: string;
     COUCHBASE_BUCKET: string;
     IS_CAPELLA: string;
+    TEMPORAL_ADDRESS: string;
   }
 }

@@ -89,6 +89,8 @@ spec:
               value: "{{ .Values.taskQueue }}"
             - name: "PORT"
               value: "{{ .Values.service.port }}"
+            - name: "TEMPORAL_ADDRESS"
+              value: "{{ .Values.temporalAddress }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

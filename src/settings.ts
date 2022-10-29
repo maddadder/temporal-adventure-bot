@@ -21,5 +21,6 @@ export function getEnv(): NodeJS.ProcessEnv {
     COUCHBASE_USER: process.env.COUCHBASE_USER,
     COUCHBASE_PASSWORD: process.env.COUCHBASE_PASSWORD,
     IS_CAPELLA: process.env.IS_CAPELLA,
+    TEMPORAL_ADDRESS: process.env.TEMPORAL_ADDRESS
   };
 }
