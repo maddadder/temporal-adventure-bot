@@ -137,6 +137,31 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
    c. Look for the channel id on this screen
 3. The channel name/id is the the same as the workspace name. You need to create a channel in your workspace and invite the bot into your channel 
 ```
+### Couchbase
+This fork has a dependency on couchbase, and assumes you have couchbase installed in your cluster. There are instructions on setting up a cluster from scratch using xcp-ng that includes couchbase instructions over at https://github.com/maddadder/setup-neonkube. As a barebones setup with couchbase installed you need to create a primary index, and also include a `begin` database entry that can be queried by the couchbase client:
+```
+{
+  "pid": "7bd7b339-ae18-46b0-855b-ae621b0ad9e6",
+  "__T": "ge",
+  "name": "begin",
+  "description": [
+    "What would you like to do today?"
+  ],
+  "options": [
+    {
+      "description": "Play Bessy's game",
+      "next": "begin-bessy-game"
+    },
+    {
+      "description": "Play 'Some other game'",
+      "next": "other-game-begin"
+    },
+  ],
+  "created": "2022-05-24T15:30:10.6520835Z",
+  "modified": "2022-10-03T03:48:37.2464414Z"
+}
+```
+
 ### Deploy
 ```
 # run the following
