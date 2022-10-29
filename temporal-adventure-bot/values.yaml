@@ -16,7 +16,7 @@ fullnameOverride: ""
 
 couchbaseUser: Administrator
 couchbasePassword: Password
-couchbaseEndpoint: my-couchbase
+couchbaseEndpoint: my-couchbase.default.svc.cluster.local
 couchbaseBucket: default
 isCapella: "false"
 
