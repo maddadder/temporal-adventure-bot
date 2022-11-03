@@ -17,6 +17,7 @@ export function getEnv(): NodeJS.ProcessEnv {
     TASK_QUEUE: process.env.TASK_QUEUE,
     WORKFLOW_ID: process.env.WORKFLOW_ID,
     COUCHBASE_BUCKET: process.env.COUCHBASE_BUCKET,
+    COUCHBASE_COLLECTION: process.env.COUCHBASE_COLLECTION,
     COUCHBASE_ENDPOINT: process.env.COUCHBASE_ENDPOINT,
     COUCHBASE_USER: process.env.COUCHBASE_USER,
     COUCHBASE_PASSWORD: process.env.COUCHBASE_PASSWORD,

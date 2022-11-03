@@ -128,7 +128,7 @@ For example, the Slack integration uses the [Slack Bolt SDK](https://slack.dev/b
 `createServer` creates the (generally Express) server that runs locally and receives webhook events from the social platform.
 Both the Discord and Slack servers use Ngrok to expose a local port on the public web, so that a `/force` command configured on the platform sends a message, it can signal to the workflow.
 
-### Also
+### To get the Channel id in slack
 ```
 1. You have to invite the bot into the channel
 2. The SLACK_CHANNEL is the channel id in the .env file, not the channel name. You can get the channel id via:
@@ -137,6 +137,14 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
    c. Look for the channel id on this screen
 3. The channel name/id is the the same as the workspace name. You need to create a channel in your workspace and invite the bot into your channel 
 ```
+
+### To get the Channel id in discord
+```
+1. Right click on channel in discord
+2. Select Copy ID
+3. You can also get the channel id from the url once you have navigated to the channel. It should be something like: https://discord.com/channels/<server>/<channelid>
+```
+
 ### Couchbase
 This fork has a dependency on couchbase, and assumes you have couchbase installed in your cluster. There are instructions on setting up a cluster from scratch using xcp-ng that includes couchbase instructions over at https://github.com/maddadder/setup-neonkube. As a barebones setup with couchbase installed you need to create a primary index, and also include a `begin` database entry that can be queried by the couchbase client:
 ```

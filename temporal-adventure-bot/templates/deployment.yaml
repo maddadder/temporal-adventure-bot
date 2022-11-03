@@ -60,6 +60,8 @@ spec:
               value: "{{ .Values.couchbaseEndpoint }}"
             - name: "COUCHBASE_BUCKET"
               value: "{{ .Values.couchbaseBucket }}"
+            - name: "COUCHBASE_COLLECTION"
+              value: "{{ .Values.couchbaseCollection }}"
             - name: "IS_CAPELLA"
               value: "{{ .Values.isCapella }}"
             - name: "SOCIAL_PLATFORM"

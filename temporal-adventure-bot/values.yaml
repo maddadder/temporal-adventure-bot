@@ -18,6 +18,7 @@ couchbaseUser: Administrator
 couchbasePassword: Password
 couchbaseEndpoint: my-couchbase.default.svc.cluster.local
 couchbaseBucket: default
+couchbaseCollection: default
 isCapella: "false"
 
 socialPlatform: slack

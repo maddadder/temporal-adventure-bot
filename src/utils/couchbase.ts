@@ -6,6 +6,7 @@ const COUCHBASE_USER = environment.COUCHBASE_USER
 const COUCHBASE_PASSWORD = environment.COUCHBASE_PASSWORD
 const COUCHBASE_ENDPOINT = environment.COUCHBASE_ENDPOINT
 let COUCHBASE_BUCKET = environment.COUCHBASE_BUCKET
+let COUCHBASE_COLLECTION = environment.COUCHBASE_COLLECTION
 let IS_CAPELLA = environment.IS_CAPELLA
 
 if (!COUCHBASE_USER) {
@@ -29,6 +30,12 @@ if (!COUCHBASE_ENDPOINT) {
 if (!COUCHBASE_BUCKET) {
   throw new Error(
       'Please define the COUCHBASE_BUCKET environment variable inside .env.local'
+  )
+}
+
+if (!COUCHBASE_COLLECTION) {
+  throw new Error(
+      'Please define the COUCHBASE_COLLECTION environment variable inside .env.local'
   )
 }
 
@@ -72,7 +79,7 @@ export async function connectToDatabase() {
   const cluster = await createCouchbaseCluster()
   const bucket = cluster.bucket(COUCHBASE_BUCKET);
   const collection = bucket.defaultCollection();
-  const defaultCollection = bucket.collection('default');
+  const defaultCollection = bucket.collection(COUCHBASE_COLLECTION);
 
   let dbConnection = {
     cluster,

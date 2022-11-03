@@ -12,6 +12,7 @@ declare namespace NodeJS {
     COUCHBASE_PASSWORD: string;
     COUCHBASE_ENDPOINT: string;
     COUCHBASE_BUCKET: string;
+    COUCHBASE_COLLECTION: string;
     IS_CAPELLA: string;
     TEMPORAL_ADDRESS: string;
   }
