@@ -172,6 +172,9 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
 4. Keyspace `default`, `_default`, `_default`
 5. Click file to import and choose `game-entries.json`
 
+#### Register your default namepace in temporal
+1. exec into temporaltest-admintools
+2. run: `tctl namespace register default`
 
 #### Deploy
 ```
