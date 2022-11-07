@@ -186,3 +186,9 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
 # run the following
 ./deploy.example.sh
 ```
+#### To export the data from couchbase
+1. In the query window, copy in the following query
+```
+select data.* from `default`.`_default`.`_default` data where __T = 'ge' order by meta().id limit 1000 offset 0
+```
+2. Click Export
