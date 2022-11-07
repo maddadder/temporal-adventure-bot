@@ -172,6 +172,11 @@ Both the Discord and Slack servers use Ngrok to expose a local port on the publi
 4. Keyspace `default`, `_default`, `_default`
 5. Click file to import and choose `game-entries.json`
 
+#### Couchbase extended example - alternative
+1. Alternatively if you want to use the command line to import the data you can do the following:
+2. Copy files from local storage to couchbase pod via `kubectl cp ./game-entries couchbase-0000:/tmp/game-entries -n default`d
+3. Import the data, including ge:: for all document entity types `cbimport json --format list -c couchbase.default.svc.cluster.local -u <login> -p <password> -b 'default' --scope-collection-exp "_default._default" -g ge::"%data.pid%" -d file://game-entries.json`
+
 #### Register your default namepace in temporal
 1. exec into temporaltest-admintools
 2. run: `tctl namespace register default`
